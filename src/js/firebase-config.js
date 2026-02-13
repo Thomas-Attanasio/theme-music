@@ -1,3 +1,4 @@
+console.log('Variabili caricate: ', import.meta.env.VITE_FIREBASE_API_KEY);
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -11,6 +12,8 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
     measurementId: import.meta.env.VITE_MEASUREMENT_ID
 }
+
+console.log("Firebase Config:", firebaseConfig);
 
 // Inizialize the app
 const app = initializeApp(firebaseConfig);

@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "identifier": "com.themeMusic.app",
   "build": {
-    "frontendDist": "../src"
+    "frontendDist": "../dist",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420"
   },
   "app": {
     "withGlobalTauri": true,
@@ -13,7 +16,7 @@
         "title": "theme-music",
         "width": 800,
         "height": 600,
-        "url": "pages/auth/login/login.html"
+        "url": "/src/pages/auth/login/login.html"
       }
     ],
     "security": {

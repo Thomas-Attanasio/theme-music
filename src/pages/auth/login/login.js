@@ -14,7 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
 
         // Took the user in the Home Page after the login
-        window.location.href = '../../home/home.html';
+        window.location.href = '../../profile/profile.html';
     }
     catch (error) {
         console.error('Login error: ', error.code);
