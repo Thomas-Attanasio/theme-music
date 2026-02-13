@@ -108,3 +108,54 @@ button:hover {
     color: #80d8ff;
     text-decoration: none;
 }
+
+
+
+
+/* Mobile config */
+@media (max-width: 480px) {
+    body {
+        align-items: flex-start;
+        padding-top: 40px;
+        background-color: #04141b;
+    }
+
+    .mainContainer {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 24px;
+        background-color: transparent;
+    }
+
+    .headerContainer h1 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+    }
+
+    .loginContainer h1, .signUpContainer h1 {
+        font-size: 1.8rem;
+    }
+
+    .inputGroup input {
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    .inputGroup input:focus {
+        transform: scale(1.02);
+    }
+
+    button {
+        padding: 16px;
+        font-size: 1.1rem;
+        margin-top: 10px;
+    }
+
+    .footerContainer {
+        margin-top: 40px;
+        padding-bottom: 20px;
+    }
+}
