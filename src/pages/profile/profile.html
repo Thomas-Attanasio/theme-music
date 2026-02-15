@@ -4,11 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theme Music</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
 
-    <h1>THEME MUSIC!</h1>
+    <div class="mainContainer">
+        <div class="headerContainer">
+            <h1>Customize</h1>
+            <p>Make your profile unique before you start</p>
+        </div>
+
+        <div class="pfFormContainer">
+            <div class="avatarCircle" id="avatarPreview">
+                <span id="plusIcon">+</span>
+                <img src="" id="userImg" style="display: none;">
+            </div>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <p class="uploadLael">Upload Profile Picture</p>
+
+            <form id="pfForm">
+                <div class="inputGroup">
+                    <input type="text" id="username" placeholder="Username" readonly>
+                </div>
+
+                <div class="inputGroup">
+                    <textarea id="bio" placeholder="Tell us about your music taste..."></textarea>
+                </div>
+
+                <div class="songSection">
+                    <p class="sectionTitle">Your First Song</p>
+
+                    <div class="inputGroup youtubeInput">
+                        <input type="text" id="ytLink" placeholder="Pste YouTube URL">
+                    </div>
+                </div>
+
+                <button type="submit" id="saveButton">Let's Go!</button>
+            </form>
+        </div>
+    </div>
 
     <script type="module" src="profile.js"></script>
     

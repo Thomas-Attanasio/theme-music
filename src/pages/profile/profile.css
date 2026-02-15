@@ -1,0 +1,192 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Agrandir';
+}
+
+body {
+    background-color: #80d8ff;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.mainContainer {
+    background-color: #14141b;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0.17, 0.67, 0.83, 0.67);
+    animation: slideUpFade 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+
+
+/* Header */
+.headerContainer h1 {
+    font-size: 2.5rem;
+    color: #80d8ff;
+    margin-bottom: 8px;
+}
+
+.headerContainer p {
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+}
+
+
+
+
+/* Form */
+#pfForm {
+    margin-top: 32px;
+}
+
+
+
+
+/* Input */
+.inputGroup {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+.inputGroup:nth-child(1) {animation-delay: 0.4s;}
+.inputGroup:nth-child(2) {animation-delay: 0.6s;}
+
+@keyframes fadeIn {
+    to {opacity: 1;}
+}
+
+input, textarea {
+    width: 100%;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 15px;
+    color: #ffffff;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #80d8ff;
+    background-color: #252525;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(128, 216, 255, 0.2);
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+
+
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 16px;
+    background-color: #80d8ff;
+    border: none;
+    border-radius: 50px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button:hover {
+    transform: scale(1.05);
+    background-color: #99e3ff;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+
+
+
+/* User avatar */
+.avatarUpload {
+    margin-bottom: 30px;
+    animation: fadeIn 0.5s forwards 0.2s;
+}
+
+.avatarCircle {
+    width: 110px;
+    height: 110px;
+    background-color: #1a1a1a;
+    border: 2px dashed #80d8ff;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.avatarCircle:hover {
+    transform: rotate(5deg) scale(1.05);
+    border-color: #ffffff;
+}
+
+#userImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.uploadLabel {
+    font-size: 0.8rem;
+    color: #80d8ff;
+}
+
+
+
+
+/* Song Section */
+.songSection {
+    margin-top: 30px;
+    text-align: left;
+    animation: fadeIn 0.5s forwards 0.8s;
+    opacity: 0;
+}
+
+.sectionTitle {
+    color: #80d8ff;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.youtubeInput {
+    position: relative;
+    display: flex;
+    align-items: center;
+}

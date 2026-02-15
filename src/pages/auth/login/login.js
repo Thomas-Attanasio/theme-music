@@ -13,7 +13,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         await signInWithEmailAndPassword(auth, email, password);
 
 
-        // Took the user in the Home Page after the login
+        // Took the user in the Profile Configuration Page after the login
         window.location.href = '../../profile/profile.html';
     }
     catch (error) {
