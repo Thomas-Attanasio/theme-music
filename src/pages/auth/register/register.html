@@ -21,22 +21,28 @@
                 <div class="inputGroup">
                     <label for="username">Username</label>
                     <input type="text" id="username" placeholder="Enter your username" required>
+                    <span class="errorText" id="errorUsername"></span>
                 </div>
 
                 <div class="inputGroup">
                     <label for="email">Email</label>
                     <input type="email" id="email" placeholder="Enter your email" required>
+                    <span class="errorText" id="errorEmail"></span>
                 </div>
 
                 <div class="inputGroup">
                     <label for="phoneNumber">Phone number</label>
                     <input type="tel" id="phoneNumber" placeholder="1234567890" required>
+                    <span class="errorText" id="errorPhoneNumber"></span>
                 </div>
 
                 <div class="inputGroup">
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Enter your password" required>
+                    <span class="errorText" id="errorPassword"></span>
                 </div>
+
+                <span class="errorText" id="genericError"></span>
 
                 <button type="submit" id="signUpButton">Sign Up</button>
             </form>

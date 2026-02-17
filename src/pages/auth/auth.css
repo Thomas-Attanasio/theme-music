@@ -19,13 +19,25 @@ body {
 
 /* Main container */
 .mainContainer {
-    background-color: #04141b;
+    background-color: #14141b;
     width: 100%;
     max-width: 400px;
     border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0.17, 0.67, 0.83, 0.67);
     text-align: center;
+    animation: slideUpFade 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 
@@ -48,7 +60,18 @@ body {
 /* Input and Label */
 .inputGroup {
     text-align: left;
-    margin-bottom: 19px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+.inputGroup:nth-child(1) {animation-delay: 0.3s;}
+.inputGroup:nth-child(2) {animation-delay: 0.5s;}
+.inputGroup:nth-child(3) {animation-delay: 0.7s;}
+.inputGroup:nth-child(4) {animation-delay: 0.9s;}
+
+@keyframes fadeIn {
+    to {opacity: 1;}
 }
 
 .inputGroup label {
@@ -66,12 +89,26 @@ body {
     border-radius: 6px;
     padding: 12px;
     outline: none;
-    transition: transform 0.3s;
+    transition: all 0.3s ease;
 }
 
 .inputGroup input:focus {
     border-color: #80d8ff;
-    transform: scale(1.07);
+    background-color: #252525;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(128, 216, 255, 0.2);
+}
+
+
+
+
+/* Error message */
+.errorText {
+    color: #ff4d4d;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+    min-height: 1rem;
 }
 
 
@@ -87,11 +124,16 @@ button {
     padding: 12px;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 button:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
+    background-color: #99e3ff;
+}
+
+button:active {
+    transform: scale(0.95);
 }
 
 

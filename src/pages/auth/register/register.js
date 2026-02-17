@@ -1,9 +1,89 @@
 import { auth, db } from '../../../js/firebase-config.js';
 import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+import { doc, setDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+
+// Real time username check
+const usernameInput = document.getElementById('username');
+const errorUsername = document.getElementById('errorUsername');
+
+// The error will appear if the user click away from the input
+usernameInput.addEventListener('blur', async () => {
+    const username = usernameInput.value.trim();
+    if (username === '') {
+        errorUsername.textContent = '';
+        return;
+    }
+
+    try {
+        const q = query(collection(db, 'users'), where('username', '==', username));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            errorUsername.textContent = `${username} already exists!`;
+        }
+        else {
+            errorUsername.textContent = '';
+        }
+    }
+    catch (e) {
+        console.error('Error while checking the username: ', e);
+    }
+});
+
+
+//Real time email check
+const emailInput = document.getElementById('email');
+const errorEmail = document.getElementById('errorEmail');
+
+emailInput.addEventListener('blur', async () => {
+    const email = emailInput.value.trim();
+    if (email === '') {
+        errorEmail.textContent = '';
+        return;
+    }
+
+    try {
+        const q = query(collection(db, 'users'), where('email', '==', email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            errorEmail.textContent = 'Email already in use!';
+        }
+        else {
+            errorEmail.textContent = '';
+        }
+    }
+    catch (e) {
+        console.error('Error while checking the email: ', e);
+    }
+});
+
+
+// Real time password check
+const passowordInput = document.getElementById('password');
+const errorPassword = document.getElementById('errorPassword');
+
+passowordInput.addEventListener('input', () => {
+    const pass = passowordInput.value;
+
+    if (pass.length > 0 && pass.length < 6) {
+        errorPassword.textContent = 'Password too weak! (Min. 6 chars)';
+    }
+    else {
+        errorPassword.textContent = '';
+    }
+});
+
 
 document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('1. Form inviato');
+
+
+    // Clean the previous errors
+    document.querySelectorAll('.errorText').forEach(item => item.textContent = '');
+
 
     // Read the user data
     const username = document.getElementById('username').value;
@@ -12,7 +92,20 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
 
     try {
+        // Check if the username already exists
+        console.log('2. Controllo username...');
+        const q = query(collection(db, 'users'), where('username', '==', username));
+        const querySnapshot = await getDocs(q);
+        console.log('3. Query completata, risutati: ', querySnapshot.size);
+
+        if (!querySnapshot.empty) {
+            document.getElementById('errorUsername').textContent = `${username} already exists!`;
+            return;
+        }
+
+
         // Create the user in the Firebase Authentication
+        console.log('4. Tentativo di registrazione Auth...');
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
@@ -29,7 +122,29 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
         window.location.href = '../../profile/profile.html';
     }
     catch (error) {
-        console.error('Error during the registration: ', error.code);
-        alert('Error: ' + error.message);
+        console.error('Error: ', error.code);
+
+
+        // Firestore errors
+        if (error.code === 'permission-denied') {
+            document.getElementById('genericError').textContent = 'System error: Database permissions not configured';
+            return;
+        }
+
+
+        // Mapping the errors in the correct fields
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                document.getElementById('errorEmail').textContent = 'Email already in use!';
+                break;
+            case 'auth/invalid-email':
+                document.getElementById('errorEmail').textContent = 'Invalid email format!';
+                break;
+            case 'auth/weak-password':
+                document.getElementById('errorPassword').textContent = 'Password too weak! (Min. 6 chars)';
+                break;
+            default:
+                document.getElementById('genericError').textContent = `Unexpected error: ${error.message}`;
+        }
     }
 });
