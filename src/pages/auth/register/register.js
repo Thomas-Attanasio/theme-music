@@ -21,9 +21,11 @@ usernameInput.addEventListener('blur', async () => {
 
         if (!querySnapshot.empty) {
             errorUsername.textContent = `${username} already exists!`;
+            usernameInput.classList.add('errorInput');
         }
         else {
             errorUsername.textContent = '';
+            usernameInput,classList.remove('errorInput');
         }
     }
     catch (e) {
@@ -49,9 +51,11 @@ emailInput.addEventListener('blur', async () => {
 
         if (!querySnapshot.empty) {
             errorEmail.textContent = 'Email already in use!';
+            emailInput.classList.add('errorInput');
         }
         else {
             errorEmail.textContent = '';
+            emailInput.classList.remove('errorInput');
         }
     }
     catch (e) {
@@ -69,9 +73,11 @@ passowordInput.addEventListener('input', () => {
 
     if (pass.length > 0 && pass.length < 6) {
         errorPassword.textContent = 'Password too weak! (Min. 6 chars)';
+        passowordInput.classList.add('errorInput');
     }
     else {
         errorPassword.textContent = '';
+        passowordInput.classList.remove('errorInput');
     }
 });
 
