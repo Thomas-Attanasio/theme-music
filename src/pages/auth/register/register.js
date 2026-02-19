@@ -23,10 +23,11 @@ usernameInput.addEventListener('blur', async () => {
             errorUsername.textContent = `${username} already exists!`;
             usernameInput.classList.add('errorInput');
         }
-        else {
+        
+        usernameInput.addEventListener('input', () => {
             errorUsername.textContent = '';
-            usernameInput,classList.remove('errorInput');
-        }
+            usernameInput.classList.remove('errorInput');
+        });
     }
     catch (e) {
         console.error('Error while checking the username: ', e);
@@ -53,10 +54,11 @@ emailInput.addEventListener('blur', async () => {
             errorEmail.textContent = 'Email already in use!';
             emailInput.classList.add('errorInput');
         }
-        else {
+        
+        emailInput.addEventListener('input', () => {
             errorEmail.textContent = '';
             emailInput.classList.remove('errorInput');
-        }
+        });
     }
     catch (e) {
         console.error('Error while checking the email: ', e);
@@ -131,13 +133,6 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
         console.error('Error: ', error.code);
 
 
-        // Firestore errors
-        if (error.code === 'permission-denied') {
-            document.getElementById('genericError').textContent = 'System error: Database permissions not configured';
-            return;
-        }
-
-
         // Mapping the errors in the correct fields
         switch (error.code) {
             case 'auth/email-already-in-use':
@@ -148,6 +143,9 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
                 break;
             case 'auth/weak-password':
                 document.getElementById('errorPassword').textContent = 'Password too weak! (Min. 6 chars)';
+                break;
+            case 'permission-denied':
+                document.getElementById('genericError').textContent = 'System error: Database permissions not configured!'
                 break;
             default:
                 document.getElementById('genericError').textContent = `Unexpected error: ${error.message}`;
