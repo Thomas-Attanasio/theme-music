@@ -15,6 +15,8 @@ export default defineConfig({
         // Add the other pages when create
         login: resolve(__dirname, 'src/pages/auth/login/login.html'),
         register: resolve(__dirname, 'src/pages/auth/register/register.html'),
+        profile: resolve(__dirname, 'src/pages/profile/profile.html'),
+        home: resolve(__dirname, 'src/pages/home/home.html')
       },
     },
   },

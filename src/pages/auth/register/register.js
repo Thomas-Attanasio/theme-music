@@ -86,7 +86,6 @@ passowordInput.addEventListener('input', () => {
 
 document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('1. Form inviato');
 
 
     // Clean the previous errors
@@ -101,10 +100,8 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
 
     try {
         // Check if the username already exists
-        console.log('2. Controllo username...');
         const q = query(collection(db, 'users'), where('username', '==', username));
         const querySnapshot = await getDocs(q);
-        console.log('3. Query completata, risutati: ', querySnapshot.size);
 
         if (!querySnapshot.empty) {
             document.getElementById('errorUsername').textContent = `${username} already exists!`;
@@ -113,7 +110,6 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
 
 
         // Create the user in the Firebase Authentication
-        console.log('4. Tentativo di registrazione Auth...');
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 

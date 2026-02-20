@@ -190,3 +190,45 @@ button:active {
     display: flex;
     align-items: center;
 }
+
+
+
+
+/* Mobile config */
+@media (max-width: 480px) {
+    body {
+        background-color: #04141b;
+        padding-top: 40px;
+        align-items: flex-start;
+    }
+
+    .mainContainer {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 24px;
+        background-color: transparent;
+    }
+
+    .headerContainer h1 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+    }
+
+    .inputGroup input {
+        font-size: 16px;
+        padding: 16px;
+    }
+
+    .inputGroup input:focus {
+        transform: scale(1.02);
+    }
+
+    button {
+        font-size: 1.1rem;
+        padding: 16px;
+        margin-top: 10px;
+    }
+}
