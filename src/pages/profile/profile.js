@@ -1,5 +1,6 @@
 // Import the Fiebase tools
-import { auth, db } from '../../js/firebase-config.js';
+import { auth, db, storage } from '../../js/firebase-config.js';
+import { ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 import { doc, getDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
@@ -13,6 +14,9 @@ const fileInput = document.getElementById('fileInput');
 const userImg = document.getElementById('userImg');
 const avatarPreview = document.getElementById('avatarPreview');
 const plusIcon = document.getElementById('plusIcon');
+const songCoverInput = document.getElementById('songCoverInput');
+const songCoverImg = document.getElementById('songCover');
+const songCoverContainer = document.querySelector('.songCover');
 
 
 // This function check if there's the user logged in
@@ -40,7 +44,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
-// If the user click on the circle, it's like clicking o the 'Select the file' button
+// If the user click on the circle, it's like clicking on the 'Select the file' button
 avatarPreview.onclick = () => fileInput.click();
 
 fileInput.onchange = (e) => {
@@ -54,6 +58,19 @@ fileInput.onchange = (e) => {
         plusIcon.style.display = 'none'; // Hide the '+' symbol
     }
 };
+
+
+// If the user click on the square, it's like clicking on the 'Select the file' button
+songCoverContainer.onclick = () => songCoverInput.click();
+
+songCoverInput.onchange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+        songCoverImg.src = URL.createObjectURL(file);
+        songCoverImg.style.display = 'block';
+    }
+}
 
 
 // This function is used to transform a very long link in to a very short ID
@@ -71,6 +88,8 @@ pfForm.addEventListener('submit', async (e) => {
 
     const user = auth.currentUser; // Take the current user
     const ytID = getYouTubeId(ytLinkInput.value); // Take the ID from the yt link
+    const pfpFile = fileInput.files[0]; // Take the selected file
+    const songCoverFile = songCoverInput.files[0];
 
 
     // Check if the link is not correct
@@ -79,20 +98,54 @@ pfForm.addEventListener('submit', async (e) => {
         return;
     }
 
+
+    // Disabled the button to prevent multiple click during the upload
+    const saveButton = document.getElementById('saveButton');
+    saveButton.disabled = true;
+    saveButton.innerText = 'Uploading vibes...';
+
+
     try {
         // Aim in the database 'users' document
         const userRef = doc(db, 'users', user.uid);
+        let profilePicUrl = '';
+        let songCoverUrl = '';
 
-        // Here i'll add the code to upload the pfp in the Firebase Storage
+
+        // Managing the photo upload
+        if (pfpFile) {
+            // Create a reference in the storage: users/USER_ID/profilePic
+            const pfpRef = ref(storage, `profilePictures/${user.uid}`);
 
 
+            // Load the file
+            await uploadBytes(pfpRef, pfpFile);
 
-        // Update the document adding the Bio and the video ID
-        await updateDoc(userRef, {
+
+            // Obtain the public URL
+            profilePicUrl = await getDownloadURL(pfpRef);
+        }
+
+        if (songCoverFile) {
+            const songCoverRef = ref(storage, `songCovers/${user.uid}`);
+            await uploadBytes(songCoverRef, songCoverFile);
+            songCoverUrl = await getDownloadURL(songCoverRef);
+        }
+
+
+        // Updating Firestore
+        const updateData = {
             bio: bioInput.value,
-            firstSongId: ytID,
-            setupComplete: true // Say the user has endend the profile configuration
-        });
+            firstSongId: getYouTubeId(ytLinkInput.value) || '',
+            setupComplete: true
+        }
+
+
+        // Adding the photo URL if it has been loaded
+        if (profilePicUrl) updateData.profilePicUrl = profilePicUrl;
+        if (songCoverUrl) updateData.songCoverUrl = songCoverUrl;
+
+        await updateDoc(userRef, updateData);
 
 
         // If everything went good let's take the user in the home page
@@ -102,5 +155,7 @@ pfForm.addEventListener('submit', async (e) => {
         console.error('Error while saving: ', error);
 
         alert('There was an error while saving the data.');
+        saveButton.disabled = false;
+        saveButton.innerText = `Let's Go!`;
     }
 });

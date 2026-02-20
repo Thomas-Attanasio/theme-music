@@ -34,8 +34,19 @@
                 <div class="songSection">
                     <p class="sectionTitle">Your First Song</p>
 
-                    <div class="inputGroup youtubeInput">
-                        <input type="text" id="ytLink" placeholder="Pste YouTube URL">
+                    <div class="songInput">
+                        <div class="inputGroup youtubeInput">
+                            <input type="text" id="ytLink" placeholder="Paste YouTube URL">
+                        </div>
+
+                        <div class="vibeContainer">
+                            <div class="inputGroup songCover">
+                                <span id="plusIcon">+</span>
+                                <img src="" id="songCover" style="display: none;">
+                            </div>
+                            <input type="file" class="inputGroup" id="songCoverInput" accept="image/*" hidden required>
+                            <p id="songCoverLabel">Let's give it a vibe!</p>
+                        </div>
                     </div>
                 </div>
 
